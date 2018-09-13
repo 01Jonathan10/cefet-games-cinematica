@@ -11,30 +11,35 @@ import com.badlogic.gdx.math.Vector3;
  *
  * @author Flávio Coutinho <fegemo@cefetmg.br>
  */
-public class Buscar extends AlgoritmoMovimentacao {
+public class Chegar extends AlgoritmoMovimentacao {
 
-    private static final char NOME = 's';
+    private static final char NOME = 'a';
+    private float satisfacao;
 
-    public Buscar(float maxVelocidade) {
-        this(NOME, maxVelocidade);
+    public Chegar() {
+        super(NOME);
     }
 
-    protected Buscar(char nome, float maxVelocidade) {
-        super(nome);
+    public Chegar(float maxVelocidade, float satisfacao) {
+        super(NOME);
         this.maxVelocidade = maxVelocidade;
+        this.satisfacao = satisfacao;
     }
 
     @Override
     public Direcionamento guiar(Pose agente) {
         Direcionamento output = new Direcionamento();
         Vector3 vel = super.alvo.getObjetivo();
-        output.velocidade = new Vector3(vel.x, vel.y, vel.z).sub(agente.posicao).nor().scl(super.maxVelocidade);
-        agente.olharNaDirecaoDaVelocidade(output.velocidade);
+        vel = new Vector3(vel.x, vel.y, vel.z).sub(agente.posicao);
+        agente.olharNaDirecaoDaVelocidade(vel);
+        if (vel.len() > satisfacao)
+            output.velocidade = vel.nor().scl(super.maxVelocidade);
+        
         return output;
     }
 
     @Override
     public int getTeclaParaAtivacao() {
-        return Keys.S;
+        return Keys.A;
     }
 }
