@@ -13,7 +13,7 @@ import com.badlogic.gdx.math.Vector3;
  */
 public class Fugir extends AlgoritmoMovimentacao {
 
-    private static final char NOME = 'w';
+    private static final char NOME = 'f';
 
     public Fugir(float maxVelocidade) {
         super(NOME);
